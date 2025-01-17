@@ -1,4 +1,4 @@
-<h1>Produktua eguneratu</h1>
+<h1>Produktua eguneratu</h1> //Produktua eguneratzeko 
 
 <form method="get" action="">
     <label for="izena">Sartu izen berria</label>
