@@ -1,4 +1,4 @@
-<h1>Produktua Ezabatu</h1>
+<h1>Produktua Ezabatu</h1> //Produktua ezabatu
 
 <form method="get" action="">
     <label for="bilaketa">Sartu id-a</label>
