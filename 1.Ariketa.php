@@ -21,6 +21,7 @@
 $datubasea = "localhost";
 $erabiltzailea = "root";
 $pasahitza = "1MG2024";
+$bilaketa = "";
 
 // Konexioa sortu
 $conn = new mysqli($datubasea, $erabiltzailea, $pasahitza);

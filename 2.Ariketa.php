@@ -18,6 +18,7 @@
 
 <?php
 //Mysql-ko eskeman sartu ahal izateko hurrengo aldagaiak sartu dira.
+$datubasea = "localhost";
 $erabiltzailea = "root";
 $pasahitza = "1MG2024";
 $bilaketa = "";
