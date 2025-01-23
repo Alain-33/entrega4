@@ -1,46 +1,49 @@
 <h1>Produktua Ezabatu</h1>
 
+<!-- Formularioa erabiltzaileari id bat sartzeko eskaintzen du -->
 <form method="get" action="">
-    <label for="bilaketa">Sartu id-a</label>
-    <input type="number" name="bilaketa" id="bilaketa" />
-    <button>Ezabatu</button>
+    <label for="bilaketa">Sartu id-a</label> <!-- Erabiltzaileari id bat sartzeko eskatzen du -->
+    <input type="number" name="bilaketa" id="bilaketa" /> <!-- Id-a sartzeko sarrera -->
+    <button>Ezabatu</button> <!-- Botoia, formularioa bidaltzeko -->
 </form>
 
-
 <?php
-$zerbitzaria = "localhost";
-$erabiltzailea = "root";
-$pasahitza = "1MG2024";
-$datubasea = "entrega4";
+// Datu basearekin konektatzeko informazioa
+$zerbitzaria = "localhost"; // Zerbitzariaren helbidea
+$erabiltzailea = "root"; // Datu basearen erabiltzailea
+$pasahitza = "1MG2024"; // Datu basearen pasahitza
+$datubasea = "entrega4"; // Datu basearen izena
 
-$bilaketa = "";
+$bilaketa = ""; // Bilaketa egiteko id-a gordetzeko aldagai bat
 
-// Formularioa bidali dela konprobatu eta id-aren datuak sartu diren edo ez
+// Formularioa bidali dela eta id-a sartu dela egiaztatzen da
 if (isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
+    // Erabiltzaileak sartutako id-a jasotzen da
     $bilaketa = $_GET["bilaketa"];
 
-    // Base datuarekin konexioa
+    // Datu basearekin konektatu
     $conn = new mysqli($zerbitzaria, $erabiltzailea, $pasahitza, $datubasea);
 
-    // Konexioa egokia izan den konprobatu
+    // Konexioa egokia izan den ala ez egiaztatzen da
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die("Connection failed: " . $conn->connect_error); // Konexioa ez badago, errore mezu bat erakutsi eta script-a gelditu
     }
 
-    // Produktua ezabatzeko kontsulta prestatu
-    $sql = "DELETE FROM entrega4.produktuak WHERE id='$bilaketa'";
+    // SQL kontsulta prestatzen da: produktu bat ezabatzeko
+    $sql = "DELETE FROM entrega4.produktuak WHERE id='$bilaketa'"; // Id-a duen produktua ezabatzeko SQL kontsulta
 
-    // Kontsulta ejekutatu y eta ezabaketa ongi egin den konprobatu
+    // SQL kontsulta exekutatzen da eta emaitzaren arabera mezu bat erakusten da
     if ($conn->query($sql) === TRUE) {
         echo"<br>";
-        echo "Erregistroa ongi ezabatu da"; 
+        echo "Erregistroa ongi ezabatu da"; // Produktua ongi ezabatuta izan bada
     } else {
-        echo "Error: " . $conn->error; 
+        echo "Error: " . $conn->error; // Kontsulta exekutatzean errore bat gertatuz gero, errore mezua erakutsi
     }
 
-    // Konexioa itxi
+    // Datu basearekin egindako konexioa itxi
     $conn->close();
 }
 ?>
 <br>
+<!-- Esteka bat sortzen da aldaketak ikusi ahal izateko -->
 <a href="TablaErakutsi.php">Aldaketak ikusi taulan</a>
