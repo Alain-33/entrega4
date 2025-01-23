@@ -78,4 +78,4 @@ if (!empty($izena) && !empty($mota) && !empty($prezioa) && !empty($bilaketa)) {
 ?>
 <br>
 <!-- Aldaketak ikusteko esteka bat sortzen da -->
-<a href="TablaErakutsi.php">Aldaketak ikusi taulan</a>
+<a href="TablaErakutsi7.php">Aldaketak ikusi taulan</a>

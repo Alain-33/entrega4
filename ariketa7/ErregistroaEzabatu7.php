@@ -46,4 +46,4 @@ if (isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
 ?>
 <br>
 <!-- Esteka bat sortzen da aldaketak ikusi ahal izateko -->
-<a href="TablaErakutsi.php">Aldaketak ikusi taulan</a>
+<a href="TablaErakutsi7.php">Aldaketak ikusi taulan</a>

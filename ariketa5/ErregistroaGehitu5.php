@@ -15,9 +15,9 @@
 
 <?php
 $zerbitzaria = "localhost"; // Zerbitzariaren helbidea definitu
-erabiltzailea = "root"; // Datu-baseko erabiltzaile izena
-pasahitza = "1MG2024"; // Datu-baseko pasahitza
-datubasea = "entrega4"; // Datu-basearen izena
+$erabiltzailea = "root"; // Datu-baseko erabiltzaile izena
+$pasahitza = "1MG2024"; // Datu-baseko pasahitza
+$datubasea = "entrega4"; // Datu-basearen izena
 
 // Bariableak inizializatu, formularioaren balioak gordetzeko
 $izena = "";  
@@ -26,17 +26,17 @@ $prezioa = "";
 
 // Formularioa bidali den konprobatu eta izena balioa hartu
 if (isset($_GET["izena"]) && !empty($_GET["izena"])) {
-    $izena = $_GET["izena"];
+    $izena = htmlspecialchars($_GET["izena"]);
 }
 
 // Formularioa bidali den konprobatu eta mota balioa hartu
 if (isset($_GET["mota"]) && !empty($_GET["mota"])) {
-    $mota = $_GET["mota"];
+    $mota = htmlspecialchars($_GET["mota"]);
 }
 
 // Formularioa bidali den konprobatu eta prezioa balioa hartu
 if (isset($_GET["prezioa"]) && !empty($_GET["prezioa"])) {
-    $prezioa = $_GET["prezioa"];
+    $prezioa = htmlspecialchars($_GET["prezioa"]);
 }
 
 // Ziurtatu formularioaren hiru balioak beteta daudela
@@ -50,27 +50,22 @@ if (!empty($izena) && !empty($mota) && !empty($prezioa)) {
     }
 
     // Produktu berria sartzeko SQL kontsulta sortu
-    $sql = "INSERT INTO entrega4.produktuak (izena, mota, prezioa) VALUES ('$izena', '$mota', '$prezioa')";
+    $sql = $conn->prepare("INSERT INTO entrega4.produktuak (izena, mota, prezioa) VALUES (?, ?, ?)");
+    $sql->bind_param("ssd", $izena, $mota, $prezioa);
 
     // SQL kontsulta exekutatu eta emaitza konprobatu
-    if ($conn->query($sql) === TRUE) {
-        echo"<br>"; // Lerro huts bat gehitu
+    if ($sql->execute() === TRUE) {
+        echo "<br>"; // Lerro huts bat gehitu
         echo "Erregistroa ongi sortu da."; // Mezua erakutsi erregistroa ongi sortu bada
     } else {
-        echo "Error: " . $conn->error; // Akatsa gertatzen bada, errore mezua erakutsi
+        echo "Error: " . $sql->error; // Akatsa gertatzen bada, errore mezua erakutsi
     }
 
     // Konexioa itxi
+    $sql->close();
     $conn->close();
 }
 ?>
 
-
-    
-
-    // Konexioa itxi
-    $conn->close();
-}
-?>
 <br>
-<a href="TablaErakutsi.php">Aldaketak ikusi taulan</a>
+<a href="TablaErakutsi5.php">Aldaketak ikusi taulan</a>
