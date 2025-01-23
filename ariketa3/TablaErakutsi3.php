@@ -6,10 +6,10 @@
 </html>
 <?php
 // Datu-basearen konexiorako parametroak definitu
-datubasea = "localhost";
-erabiltzailea = "root";
-pasahitza = "1MG2024";
-bilaketa="";
+$datubasea = "localhost";
+$erabiltzailea = "root";
+$pasahitza = "1MG2024";
+$bilaketa = "";
 
 // Formularioan datuak bete diren konprobatu
 if(isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
@@ -59,12 +59,14 @@ if ($emaitza->num_rows > 0) {
     // Datu-baseko emaitzak irakurri eta taulan gehitu
     while ($row = $emaitza->fetch_assoc()) {
         // Bilaketarekin bat datozen errenkadak soilik erakutsi
-        if (str_contains($row["izena"], $bilaketa) || str_contains($row["mota"], $bilaketa)) {
+        if (strpos(strtolower($row["izena"]), strtolower($bilaketa)) !== false || strpos(strtolower($row["mota"]), strtolower($bilaketa)) !== false) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['id']) . "</td>";
             echo "<td>" . htmlspecialchars($row['izena']) . "</td>";
             echo "<td>" . htmlspecialchars($row['mota']) . "</td>";
-            echo "<td>" . htmlspecialchars(number_format($row['prezioa'],2)) . " €</td>";
+            echo "<td>" . htmlspecialchars(number_format($row['prezioa'], 2)) . " €</td>";
+            echo "<td><button><i class='fas fa-edit'></i> Editatu</button> <button><i class='fas fa-trash'></i> Ezabatu</button></td>";
+            echo "</tr>";
         }
     }
 

@@ -77,7 +77,7 @@ if ($emaitza->num_rows > 0) {
 
     // Produktu berriak gehitzeko esteka gehitu
     echo "<div style='margin-top: 20px;'>";
-    echo "<a href='ErregistroaGehitu.php' class='add-action'><i class='fas fa-plus'></i>Produktua Gehitu</a>";
+    echo "<a href='ErregistroaGehitu7.php' class='add-action'><i class='fas fa-plus'></i>Produktua Gehitu</a>";
     echo "</div>";
 
 } else {

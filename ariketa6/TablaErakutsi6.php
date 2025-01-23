@@ -4,12 +4,13 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     </head>
 </html>
+
 <?php
 // Datu-basearen konexiorako parametroak definitu
-datubasea = "localhost";
-erabiltzailea = "root";
-pasahitza = "1MG2024";
-bilaketa="";
+$datubasea = "localhost";
+$erabiltzailea = "root";
+$pasahitza = "1MG2024";
+$bilaketa = "";
 
 // Formularioan datuak bete diren konprobatu
 if(isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
@@ -34,6 +35,7 @@ echo "<h1>Produktuen taula</h1>";
     <input type="text" name="bilaketa" id="bilaketa"/>
     <button>Bilatu</button>
 </form>
+
 <?php
 
 // Produktuen informazioa ateratzeko kontsulta sortu
@@ -59,14 +61,14 @@ if ($emaitza->num_rows > 0) {
     // Datu-baseko emaitzak irakurri eta taulan gehitu
     while ($row = $emaitza->fetch_assoc()) {
         // Bilaketarekin bat datozen errenkadak soilik erakutsi
-        if (str_contains($row["izena"], $bilaketa) || str_contains($row["mota"], $bilaketa)) {
+        if (strpos(strtolower($row["izena"]), strtolower($bilaketa)) !== false || strpos(strtolower($row["mota"]), strtolower($bilaketa)) !== false) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['id']) . "</td>";
             echo "<td>" . htmlspecialchars($row['izena']) . "</td>";
             echo "<td>" . htmlspecialchars($row['mota']) . "</td>";
-            echo "<td>" . htmlspecialchars(number_format($row['prezioa'],2)) . " €</td>";
+            echo "<td>" . htmlspecialchars(number_format($row['prezioa'], 2)) . " €</td>";
             // Ezabatu eta eguneratu botoiak gehitu
-            echo "<td><a href='ErregistroaEzabatu.php' class='add-action'><i class='fas fa-trash'></i>Ezabatu</a> <br> <a href='ErregistroaEguneratu.php' class='add-action'><i class='fas fa-pencil'></i>Eguneratu</a></td>";
+            echo "<td><a href='ErregistroaEzabatu.php?id=" . urlencode($row['id']) . "' class='add-action'><i class='fas fa-trash'></i>Ezabatu</a> <br> <a href='ErregistroaEguneratu.php?id=" . urlencode($row['id']) . "' class='add-action'><i class='fas fa-pencil'></i>Eguneratu</a></td>";
             echo "</tr>";
         }
     }
@@ -77,7 +79,7 @@ if ($emaitza->num_rows > 0) {
 
     // Produktu berriak gehitzeko esteka gehitu
     echo "<div style='margin-top: 20px;'>";
-    echo "<a href='ErregistroaGehitu.php' class='add-action'><i class='fas fa-plus'></i>Produktua Gehitu</a>";
+    echo "<a href='ErregistroaGehitu6.php' class='add-action'><i class='fas fa-plus'></i>Produktua Gehitu</a>";
     echo "</div>";
 
 } else {

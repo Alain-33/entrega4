@@ -37,19 +37,19 @@ $bilaketa = "";
 
 // Formularioa bidali dela eta datuak bete diren egiaztatu
 if (isset($_GET["izena"]) && !empty($_GET["izena"])) {
-    $izena = $_GET["izena"]; // Izena jasotzen da
+    $izena = htmlspecialchars($_GET["izena"]); // Izena jasotzen da
 }
 
 if (isset($_GET["mota"]) && !empty($_GET["mota"])) {
-    $mota = $_GET["mota"]; // Mota jasotzen da
+    $mota = htmlspecialchars($_GET["mota"]); // Mota jasotzen da
 }
 
 if (isset($_GET["prezioa"]) && !empty($_GET["prezioa"])) {
-    $prezioa = $_GET["prezioa"]; // Prezioa jasotzen da
+    $prezioa = htmlspecialchars($_GET["prezioa"]); // Prezioa jasotzen da
 }
 
 if (isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
-    $bilaketa = $_GET["bilaketa"]; // ID-a jasotzen da
+    $bilaketa = (int)$_GET["bilaketa"]; // ID-a jasotzen da (zenbakizkoa)
 }
 
 // Formularioaren datu guztiak bete direla egiaztatzen da
@@ -63,13 +63,17 @@ if (!empty($izena) && !empty($mota) && !empty($prezioa) && !empty($bilaketa)) {
     }
 
     // SQL kontsulta prestatu: Produktuaren izena, mota eta prezioa eguneratzen dira IDaren arabera
+    $izena = $conn->real_escape_string($izena); // SQL injezioaren aurkako babes
+    $mota = $conn->real_escape_string($mota); // SQL injezioaren aurkako babes
+    $prezioa = (float)$prezioa; // Prezioa zenbakizkoa tratatu
     $sql = "UPDATE entrega4.produktuak SET izena='$izena', mota='$mota', prezioa='$prezioa' WHERE id='$bilaketa'";
 
     // SQL kontsulta exekutatu eta emaitza egiaztatu
     if ($conn->query($sql) === TRUE) {
-        echo"<br>";
+        echo "<br>";
         echo "Erregistroa ongi eguneratu da"; // Eguneraketa arrakastatsua bada
-        echo "Error: " . $conn->error; // Hala ere, errore bat gertatuz gero, mezua erakutsi
+    } else {
+        echo "Errorea: " . $conn->error; // Hala ere, errore bat gertatuz gero, mezua erakutsi
     }
 
     // Konexioa itxi
@@ -79,3 +83,4 @@ if (!empty($izena) && !empty($mota) && !empty($prezioa) && !empty($bilaketa)) {
 <br>
 <!-- Aldaketak ikusteko esteka bat sortzen da -->
 <a href="TablaErakutsi7.php">Aldaketak ikusi taulan</a>
+

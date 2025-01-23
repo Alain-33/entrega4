@@ -19,7 +19,7 @@ $bilaketa = ""; // Bilaketa egiteko id-a gordetzeko aldagai bat
 // Formularioa bidali dela eta id-a sartu dela egiaztatzen da
 if (isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
     // Erabiltzaileak sartutako id-a jasotzen da
-    $bilaketa = $_GET["bilaketa"];
+    $bilaketa = (int)$_GET["bilaketa"]; // Id-a zenbakizkoa behar da
 
     // Datu basearekin konektatu
     $conn = new mysqli($zerbitzaria, $erabiltzailea, $pasahitza, $datubasea);
@@ -30,11 +30,14 @@ if (isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
     }
 
     // SQL kontsulta prestatzen da: produktu bat ezabatzeko
-    $sql = "DELETE FROM entrega4.produktuak WHERE id='$bilaketa'"; // Id-a duen produktua ezabatzeko SQL kontsulta
+    $bilaketa = $conn->real_escape_string($bilaketa); // SQL injezioaren aurkako babes
 
     // SQL kontsulta exekutatzen da eta emaitzaren arabera mezu bat erakusten da
+    $sql = "DELETE FROM entrega4.produktuak WHERE id='$bilaketa'"; // Id-a duen produktua ezabatzeko SQL kontsulta
+
+    // SQL kontsulta exekutatzen da
     if ($conn->query($sql) === TRUE) {
-        echo"<br>";
+        echo "<br>";
         echo "Erregistroa ongi ezabatu da"; // Produktua ongi ezabatuta izan bada
     } else {
         echo "Error: " . $conn->error; // Kontsulta exekutatzean errore bat gertatuz gero, errore mezua erakutsi
@@ -47,3 +50,4 @@ if (isset($_GET["bilaketa"]) && !empty($_GET["bilaketa"])) {
 <br>
 <!-- Esteka bat sortzen da aldaketak ikusi ahal izateko -->
 <a href="TablaErakutsi7.php">Aldaketak ikusi taulan</a>
+
